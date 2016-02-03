@@ -4,12 +4,8 @@ setwd("C:/Users/Chuang/Desktop/Getting and Cleaning Data/UCI HAR Dataset")
 
 ## read features.txt and covnert to a data frame
 f = "C:/Users/Chuang/Desktop/Getting and Cleaning Data/UCI HAR Dataset/features.txt"
-data = data.frame()
-if(is.null(cols)){
-  features  = read.table(f,sep="",stringsAsFactors=F)
-} else {
-  features  = read.table(f,sep="",stringsAsFactors=F)
-}
+features  = read.table(f,sep="",stringsAsFactors=F)
+
 
 ## read data and build database (type: test and train)
 get_data <- function(type, features){
@@ -52,9 +48,8 @@ mean_std$activity = factor(mean_std$activity, levels=activity_labels$V1, labels=
 
 ## 5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 library(plyr)
-
 tidy_dataset =
-  ddply(mean_std, .(id, activity), .MEAN = function(x){colMeans(x[,-c(1:2)],na.rm = TRUE)})
+  ddply(mean_std, .(id, activity), .fun = function(x){colMeans(x[,-c(1:2)],na.rm = TRUE)})
 
 write.csv(tidy_dataset, file = "tidy_dataset_byMC.csv")
 
