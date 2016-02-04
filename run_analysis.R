@@ -51,5 +51,4 @@ library(plyr)
 tidy_dataset =
   ddply(mean_std, .(id, activity), .fun = function(x){colMeans(x[,-c(1:2)],na.rm = TRUE)})
 
-write.csv(tidy_dataset, file = "tidy_dataset_byMC.csv")
-
+write.table(tidy_dataset, file = "tidy_dataset_byMC.txt", row.name=FALSE)
